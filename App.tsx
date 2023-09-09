@@ -3,7 +3,11 @@ import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleSheet, ScrollView, Text, View, Image } from "react-native";
+// import HTML from "react-native-render-html";
+import RenderHtml from "react-native-render-html";
+
 import recipeInformation from "./data";
+import { Ingredient } from "./types";
 
 export default function App() {
   // console.log(recipeInformation);
@@ -66,7 +70,7 @@ export default function App() {
   //   googleSearchImage(recipeInformation.extendedIngredients[0].image);
   // }, []);
 
-  console.log(recipeInformation.summary);
+  // console.log(recipeInformation.summary);
 
   return (
     <SafeAreaProvider style={styles.container}>
@@ -79,13 +83,15 @@ export default function App() {
           {recipeInformation.title}
         </Text>
 
-        <Text style={[styles.text, { fontSize: 16 }]}>
-          {recipeInformation.summary}
-        </Text>
+        <RenderHtml
+          source={{ html: recipeInformation.summary }}
+          baseStyle={{ color: "#fff" }}
+        />
 
         <Text style={[styles.text, { fontSize: 16 }]}>
           {recipeInformation.instructions}
         </Text>
+
         <Text style={[styles.text, { fontSize: 16 }]}>
           {recipeInformation.extendedIngredients.map((ingredient) => {
             return <Text>{ingredient.original}</Text>;

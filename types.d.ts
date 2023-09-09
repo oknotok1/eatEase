@@ -5,13 +5,13 @@ export interface RecipeByIngredients {
   imageType: string;
   usedIngredientCount: number;
   missedIngredientCount: number;
-  missedIngredients: Ingredients[];
-  usedIngredients: Ingredients[];
+  missedIngredients: Ingredient[];
+  usedIngredients: Ingredient[];
   unusedIngredients: any[];
   likes: number;
 }
 
-export interface Ingredients {
+export interface Ingredient {
   id: number;
   amount: number;
   unit: string;
