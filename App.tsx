@@ -3,36 +3,39 @@ import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Users } from "./types";
+import recipeInformation from "./data";
 
 export default function App() {
-  const [data, setData] = useState<Users[]>([]);
+  console.log(recipeInformation);
 
-  const fetchUserData = () => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        // Handle the API response data here
-        console.log(response.data);
-        setData(response.data);
-      })
-      .catch((error) => {
-        // Handle any errors that occur during the API call
-        console.error(error);
-      });
-  };
+  // const getRecipeInformation = () => {
+  //   axios
+  //     .get("https://api.spoonacular.com/recipes/716429/information", {
+  //       params: {
+  //         apiKey: "c2fac6ab9ee34f06a3c19558516ee1f4",
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       console.log("Worked");
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  // useEffect(() => {
+  //   getRecipeInformation();
+  // }, []);
 
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <Text>Open up App.tsx to start working on your app!</Text>
+        <Text style={styles.text}>
+          Open up App.tsx to start working on your app!
+        </Text>
         <ImageItem src="https://spoonacular.com/cdn/ingredients_100x100/butter-sliced.jpg" />
-        <Text>{data[0]?.name}</Text>
 
         <View style={{ width: 200, height: 200, backgroundColor: "lightgrey" }}>
           <Image
@@ -67,8 +70,11 @@ const ImageItem = ({ src }: { src: string }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    color: "#fff",
   },
 });
