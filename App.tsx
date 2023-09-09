@@ -30,7 +30,7 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="auto" />
         <Text>Open up App.tsx to start working on your app!</Text>
-        <Text>{data[0]?.name}</Text>
+        {data && <Text>{data[0].name}</Text>}
         <ImageItem src="https://spoonacular.com/cdn/ingredients_100x100/butter-sliced.jpg" />
 
         <View style={{ width: 200, height: 200, backgroundColor: "lightgrey" }}>
