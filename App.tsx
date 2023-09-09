@@ -3,9 +3,10 @@ import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleSheet, Text, View, Image } from "react-native";
+import { Users } from "./types";
 
 export default function App() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<Users[]>([]);
 
   const fetchUserData = () => {
     axios
@@ -30,8 +31,8 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="auto" />
         <Text>Open up App.tsx to start working on your app!</Text>
-        {data && <Text>{data[0].name}</Text>}
         <ImageItem src="https://spoonacular.com/cdn/ingredients_100x100/butter-sliced.jpg" />
+        <Text>{data[0]?.name}</Text>
 
         <View style={{ width: 200, height: 200, backgroundColor: "lightgrey" }}>
           <Image
