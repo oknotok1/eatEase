@@ -41,6 +41,7 @@ export default function Recipe() {
       </View>
 
       <TouchableOpacity
+        style={{ marginVertical: 32 }}
         onPress={() => {
           Linking.openURL(recipeInformation.sourceUrl);
         }}
@@ -54,8 +55,7 @@ export default function Recipe() {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    backgroundColor: "lightgrey",
   },
-  text: {
-    // color: "#fff",
-  },
+  text: {},
 });
