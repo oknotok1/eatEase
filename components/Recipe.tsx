@@ -1,12 +1,10 @@
 import React from "react";
 import {
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   Text,
   View,
   useWindowDimensions,
-  TouchableOpacity,
   Linking,
 } from "react-native";
 import RenderHtml from "react-native-render-html";
@@ -89,9 +87,9 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#FB6107",
     padding: 16 * 1.5,
+    paddingVertical: 16 * 2,
     flex: 1,
     gap: 16,
-    paddingVertical: 16 * 2,
   },
   information: {
     backgroundColor: "#F4DF46",

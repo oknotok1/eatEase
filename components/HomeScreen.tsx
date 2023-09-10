@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16 * 1.5,
+    paddingVertical: 16 * 2,
   },
   title: {
     borderWidth: 1,
