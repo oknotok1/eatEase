@@ -12,6 +12,8 @@
     "@babel/runtime": "^7.22.15",
     "@expo/webpack-config": "^18.0.1",
     "@native-html/css-processor": "^1.11.0",
+    "@react-navigation/bottom-tabs": "^6.5.8",
+    "@react-navigation/native": "^6.1.7",
     "axios": "0.27.2",
     "expo": "48.0.0",
     "expo-device": "~5.2.1",

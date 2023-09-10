@@ -1,69 +1,60 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-  useWindowDimensions,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
-import RenderHtml from "react-native-render-html";
-import Picture from "./components/Picture";
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import recipeInformation from "./data";
+import HomeScreen from "./components/HomeScreen";
+import Recipes from "./components/Recipes";
+import Timer from "./components/Timer";
 
-export default function App() {
-  console.log(recipeInformation.instructions);
-  const { width } = useWindowDimensions();
+const Tab = createBottomTabNavigator();
 
+function MyTabs() {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <StatusBar style="light" />
-
-        <Picture src={recipeInformation.image} />
-
-        <Text style={[styles.text, { fontSize: 32, fontWeight: "bold" }]}>
-          {recipeInformation.title}
-        </Text>
-
-        <RenderHtml
-          source={{ html: recipeInformation.summary }}
-          contentWidth={width}
-          baseStyle={{ color: "#fff" }}
-        />
-
-        <Text style={[styles.text, { fontSize: 24 }]}>Ingredients</Text>
-        <View>
-          {recipeInformation.extendedIngredients.map((ingredient, index) => (
-            <Text key={index} style={[styles.text, { fontSize: 16 }]}>
-              {ingredient.original}
-            </Text>
-          ))}
-        </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL(recipeInformation.sourceUrl);
-          }}
-        >
-          <Text style={[styles.text, { fontSize: 24 }]}>View Full Recipe</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+    <Tab.Navigator
+      initialRouteName="Feed"
+      screenOptions={{
+        tabBarActiveTintColor: "#e91e63",
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Recipes"
+        component={Recipes}
+        options={{
+          tabBarLabel: "food",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="food" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Timer"
+        component={Timer}
+        options={{
+          tabBarLabel: "Timer",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="timer" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    color: "#fff",
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
+  );
+}
