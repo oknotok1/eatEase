@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as Font from "expo-font";
 
 import HomeScreen from "./components/HomeScreen";
 import Recipes from "./components/Recipes";
 import Timer from "./components/Timer";
+import { StatusBar } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +16,7 @@ function MyTabs() {
     <Tab.Navigator
       initialRouteName="Feed"
       screenOptions={{
-        tabBarActiveTintColor: "#e91e63",
+        tabBarActiveTintColor: "#FB6107",
       }}
     >
       <Tab.Screen
@@ -31,7 +33,7 @@ function MyTabs() {
         name="Recipes"
         component={Recipes}
         options={{
-          tabBarLabel: "food",
+          tabBarLabel: "Recipes",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="food" color={color} size={size} />
           ),
@@ -52,8 +54,29 @@ function MyTabs() {
 }
 
 export default function App() {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        "limelight-regular": require("./assets/fonts/Limelight/Limelight-Regular.ttf"),
+        "figtree-regular": require("./assets/fonts/Figtree/static/Figtree-Regular.ttf"),
+        "figtree-medium": require("./assets/fonts/Figtree/static/Figtree-Medium.ttf"),
+        "figtree-bold": require("./assets/fonts/Figtree/static/Figtree-Bold.ttf"),
+      });
+      setFontLoaded(true); // Mark the fonts as loaded
+    }
+
+    loadFonts();
+  }, []);
+
+  if (!fontLoaded) {
+    return null; // Don't render anything until the fonts are loaded
+  }
+
   return (
     <NavigationContainer>
+      <StatusBar barStyle="dark-content" />
       <MyTabs />
     </NavigationContainer>
   );

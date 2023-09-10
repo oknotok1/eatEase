@@ -1,12 +1,25 @@
 import { View, Image } from "react-native";
 
-const Picture = ({ src }: { src: string }) => {
+const Picture = ({
+  src,
+  width,
+  height,
+  resizeMode,
+  borderRadius,
+}: {
+  src: string;
+  width?: string | number;
+  height?: string | number;
+  resizeMode?: "cover" | "contain" | "stretch" | "repeat" | "center";
+  borderRadius?: number;
+}) => {
   return (
     <View
       style={{
-        width: 200,
-        height: 200,
+        width: width ?? "100%",
+        height: height ?? "100%",
         backgroundColor: "lightgrey",
+        borderRadius: borderRadius ?? 0,
       }}
     >
       <Image
@@ -16,7 +29,8 @@ const Picture = ({ src }: { src: string }) => {
         style={{
           width: "100%",
           height: "100%",
-          resizeMode: "contain",
+          resizeMode: resizeMode || "contain",
+          borderRadius: borderRadius ?? 0,
         }}
       />
     </View>
