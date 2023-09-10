@@ -37,6 +37,7 @@ function MyTabs() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="food" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen

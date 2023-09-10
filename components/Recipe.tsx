@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import RenderHtml from "react-native-render-html";
 import Picture from "./Picture";
-import recipeInformation from "../data";
 import Button from "./Button";
+import recipeInformation from "../data";
 
 export default function Recipe() {
   console.log(recipeInformation.instructions);
