@@ -1,83 +1,29 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { StyleSheet, ScrollView, Text, View, Image } from "react-native";
-// import HTML from "react-native-render-html";
+import {
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import RenderHtml from "react-native-render-html";
+import Picture from "./components/Picture";
 
 import recipeInformation from "./data";
-import { Ingredient } from "./types";
 
 export default function App() {
-  // console.log(recipeInformation);
-
-  // const getRecipeInformation = () => {
-  //   axios
-  //     .get("https://api.spoonacular.com/recipes/716429/information", {
-  //       params: {
-  //         apiKey: "c2fac6ab9ee34f06a3c19558516ee1f4",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       console.log("Worked");
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getRecipeInformation();
-  // }, []);
-
-  const [image, setImage] = useState<string>("");
-
-  // const googleSearchImage = (searchQuery: string) => {
-  //   axios
-  //     .get("https://api.serphouse.com/serp/live", {
-  //       headers: {
-  //         accept: "application/json",
-  //         "content-type": "application/json",
-  //         authorization:
-  //           "Bearer X4t0HB0Y6B6jMaJ2XYEkte7aUYyM0NtI68uOXlXRJqZ3SzYSfoZ5erWlLkeb",
-  //       },
-  //       params: {
-  //         q: searchQuery,
-  //         domain: "google.com",
-  //         location: "Singapore",
-  //         lang: "en",
-  //         device: "desktop",
-  //         serp_type: "image",
-  //         page: 1,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       const results = response.data.results.results;
-  //       console.log(
-  //         "googleSearchImage::results[0]?.original",
-  //         results[0]?.original
-  //       );
-  //       setImage(results[0]?.original);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   googleSearchImage(recipeInformation.extendedIngredients[0].image);
-  // }, []);
-
-  // console.log(recipeInformation.summary);
+  console.log(recipeInformation.instructions);
+  const { width } = useWindowDimensions();
 
   return (
-    <SafeAreaProvider style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
 
-        <ImageItem src={recipeInformation.image} />
+        <Picture src={recipeInformation.image} />
 
         <Text style={[styles.text, { fontSize: 32, fontWeight: "bold" }]}>
           {recipeInformation.title}
@@ -85,56 +31,30 @@ export default function App() {
 
         <RenderHtml
           source={{ html: recipeInformation.summary }}
+          contentWidth={width}
           baseStyle={{ color: "#fff" }}
         />
 
-        <Text style={[styles.text, { fontSize: 16 }]}>
-          {recipeInformation.instructions}
-        </Text>
+        <Text style={[styles.text, { fontSize: 24 }]}>Ingredients</Text>
+        <View>
+          {recipeInformation.extendedIngredients.map((ingredient, index) => (
+            <Text key={index} style={[styles.text, { fontSize: 16 }]}>
+              {ingredient.original}
+            </Text>
+          ))}
+        </View>
 
-        <Text style={[styles.text, { fontSize: 16 }]}>
-          {recipeInformation.extendedIngredients.map((ingredient) => {
-            return <Text>{ingredient.original}</Text>;
-          })}
-        </Text>
-
-        {/* {image && <ImageItem src={image} />} */}
-
-        {/* <View style={{ width: 200, height: 200, backgroundColor: "lightgrey" }}>
-          <Image
-            source={{
-              uri: "https://spoonacular.com/recipeImages/640352-312x231.jpg",
-            }}
-            style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-          />
-        </View> */}
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL(recipeInformation.sourceUrl);
+          }}
+        >
+          <Text style={[styles.text, { fontSize: 24 }]}>View Full Recipe</Text>
+        </TouchableOpacity>
       </ScrollView>
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 }
-
-const ImageItem = ({ src }: { src: string }) => {
-  return (
-    <View
-      style={{
-        width: 200,
-        height: 200,
-        backgroundColor: "lightgrey",
-      }}
-    >
-      <Image
-        source={{
-          uri: src,
-        }}
-        style={{
-          width: "100%",
-          height: "100%",
-          resizeMode: "contain",
-        }}
-      />
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
