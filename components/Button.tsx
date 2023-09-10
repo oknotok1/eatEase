@@ -4,10 +4,12 @@ export default function Button({
   text,
   onPress,
   color,
+  disabled,
 }: {
   text: string;
   onPress: () => void;
   color?: string;
+  disabled?: boolean;
 }) {
   return (
     <TouchableOpacity
@@ -16,8 +18,10 @@ export default function Button({
         color === "secondary"
           ? { backgroundColor: "#598019" }
           : { backgroundColor: "#FF6025" },
+        disabled ? { opacity: 0.5 } : {},
       ]}
       onPress={onPress}
+      disabled={disabled}
     >
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
