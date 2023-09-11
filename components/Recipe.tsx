@@ -21,12 +21,14 @@ export default function RecipePage({ route }: { route: any }) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Picture
-          src={recipeInformation.image}
-          height={200}
-          resizeMode="cover"
-          borderRadius={16 * 1.5}
-        />
+        {recipeInformation.image && (
+          <Picture
+            src={recipeInformation.image}
+            height={200}
+            resizeMode="cover"
+            borderRadius={16 * 1.5}
+          />
+        )}
         <Text style={[styles.titleText, { fontSize: 32, fontWeight: "bold" }]}>
           {recipeInformation.title}
         </Text>

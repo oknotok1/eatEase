@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
+import axios from "axios";
 import Recipe from "./Recipe";
 import Button from "./Button";
 import Picture from "./Picture";
@@ -19,6 +20,24 @@ const Stack = createStackNavigator();
 
 const ExploreRecipes = ({ navigation }: { navigation: any }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [featuredRecipes, setFeaturedRecipes] = useState<RecipeInformation[]>(
+    []
+  );
+
+  const getRandomRecipe = () => {
+    axios
+      .get("https://api.spoonacular.com/recipes/random?number=8", {
+        params: {
+          apiKey: "c2fac6ab9ee34f06a3c19558516ee1f4",
+        },
+      })
+      .then((response) => {
+        setFeaturedRecipes(response.data.recipes);
+      })
+      .catch(() => {
+        setFeaturedRecipes(recipes); // Fallback to local data if API call fails
+      });
+  };
 
   const handleSearch = () => {
     if (searchQuery.trim() === "") {
@@ -28,6 +47,35 @@ const ExploreRecipes = ({ navigation }: { navigation: any }) => {
       console.log("API call with search query:", searchQuery);
     }
   };
+
+  useEffect(() => {
+    getRandomRecipe();
+  }, []);
+
+  if (featuredRecipes.length === 0) {
+    return (
+      <View
+        style={[
+          styles.exploreRecipes,
+          styles.container,
+          { display: "flex", justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        <Text
+          style={[
+            styles.titleText,
+            {
+              fontSize: 32,
+              fontWeight: "bold",
+              textAlign: "center",
+            },
+          ]}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.exploreRecipes, styles.container]}>
@@ -47,20 +95,22 @@ const ExploreRecipes = ({ navigation }: { navigation: any }) => {
       <ScrollView>
         <View style={styles.featuredRecipes}>
           <Text style={styles.titleText}>Featured Recipes</Text>
-          {recipes.map((recipe: RecipeInformation) => (
+          {featuredRecipes.map((recipe: RecipeInformation, index) => (
             <TouchableOpacity
-              key={recipe.id}
+              key={recipe.id || index}
               style={[styles.featuredRecipeItem, { marginTop: 16 }]}
               onPress={() => {
                 navigation.navigate("Recipe", { recipeInformation: recipe });
               }}
             >
-              <Picture
-                src={recipe.image}
-                height={200}
-                resizeMode="cover"
-                borderRadius={16 / 2}
-              />
+              {recipe.image && (
+                <Picture
+                  src={recipe.image}
+                  height={200}
+                  resizeMode="cover"
+                  borderRadius={16 / 2}
+                />
+              )}
               <Text
                 style={[
                   styles.text,
