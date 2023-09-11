@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 
 import HomeScreen from "./components/HomeScreen";
-import Recipes from "./components/Recipes";
+import ExploreRecipes from "./components/ExploreRecipes";
 import Timer from "./components/Timer";
 import { StatusBar } from "react-native";
 
@@ -31,7 +31,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Recipes"
-        component={Recipes}
+        component={ExploreRecipes}
         options={{
           tabBarLabel: "Recipes",
           tabBarIcon: ({ color, size }) => (
@@ -40,7 +40,7 @@ function MyTabs() {
           headerShown: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Timer"
         component={Timer}
         options={{
@@ -49,7 +49,7 @@ function MyTabs() {
             <MaterialCommunityIcons name="timer" color={color} size={size} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

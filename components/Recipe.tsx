@@ -10,10 +10,12 @@ import {
 import RenderHtml from "react-native-render-html";
 import Picture from "./Picture";
 import Button from "./Button";
-import recipeInformation from "../data";
+import { RecipeInformation } from "../types";
 
-export default function Recipe() {
-  console.log(recipeInformation.instructions);
+export default function RecipePage({ route }: { route: any }) {
+  const { recipeInformation } = route.params as {
+    recipeInformation: RecipeInformation;
+  };
   const { width } = useWindowDimensions();
 
   return (
@@ -25,11 +27,9 @@ export default function Recipe() {
           resizeMode="cover"
           borderRadius={16 * 1.5}
         />
-
         <Text style={[styles.titleText, { fontSize: 32, fontWeight: "bold" }]}>
           {recipeInformation.title}
         </Text>
-
         <RenderHtml
           source={{ html: recipeInformation.summary }}
           contentWidth={width}
@@ -49,21 +49,41 @@ export default function Recipe() {
             <Text style={styles.text}>{ingredient.original}</Text>
           </View>
         ))}
-        <View style={{ marginTop: 16 * 1.5 }}>
-          <Button
-            text="View Full Recipe"
-            onPress={() => {
-              Linking.openURL(recipeInformation.sourceUrl);
-            }}
-          />
-          <Button
-            text="View on Spoonacular"
-            onPress={() => {
-              Linking.openURL(recipeInformation.spoonacularSourceUrl);
-            }}
-            color="secondary"
-          />
-        </View>
+      </View>
+
+      {recipeInformation.analyzedInstructions &&
+        recipeInformation.analyzedInstructions.length > 0 && (
+          <View style={styles.instructions}>
+            <Text
+              style={[styles.titleText, { fontSize: 16 * 2, marginBottom: 16 }]}
+            >
+              Instructions
+            </Text>
+            {recipeInformation.analyzedInstructions[0]?.steps?.map(
+              (instruction, index) => (
+                <View key={index} style={styles.listItem}>
+                  <Text style={styles.bullet}>{index + 1}.</Text>
+                  <Text style={styles.text}>{instruction.step}</Text>
+                </View>
+              )
+            )}
+          </View>
+        )}
+
+      <View style={styles.sources}>
+        <Button
+          text="View Full Recipe"
+          onPress={() => {
+            Linking.openURL(recipeInformation.sourceUrl);
+          }}
+        />
+        <Button
+          text="View on Spoonacular"
+          onPress={() => {
+            Linking.openURL(recipeInformation.spoonacularSourceUrl);
+          }}
+          color="secondary"
+        />
       </View>
     </ScrollView>
   );
@@ -86,12 +106,22 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: "#FB6107",
-    padding: 16 * 1.5,
+    paddingHorizontal: 16 * 1.5,
     paddingVertical: 16 * 2,
     flex: 1,
     gap: 16,
   },
   information: {
+    backgroundColor: "#F4DF46",
+    paddingHorizontal: 16 * 1.5,
+    paddingTop: 16 * 1.5,
+  },
+  instructions: {
+    backgroundColor: "#F4DF46",
+    paddingHorizontal: 16 * 1.5,
+    paddingTop: 16 * 1.5,
+  },
+  sources: {
     backgroundColor: "#F4DF46",
     padding: 16 * 1.5,
   },
@@ -105,5 +135,6 @@ const styles = StyleSheet.create({
   bullet: {
     fontSize: 16,
     marginRight: 8,
+    marginBottom: "auto",
   },
 });
