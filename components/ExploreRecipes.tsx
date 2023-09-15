@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
 import { useAsyncStorageData } from "../AsyncStorageDataContext";
-import axios from "axios";
 import Recipe from "./Recipe";
-import Button from "./Button";
-import recipes from "../data/recipes";
 import RecipeCard from "./RecipeCard";
 import { RecipeInformation } from "../types";
 
@@ -73,10 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  text: {
-    fontSize: 16,
-    fontFamily: "figtree-regular",
-  },
   titleText: {
     fontSize: 16 * 2.75,
     fontFamily: "limelight-regular",
@@ -85,27 +78,6 @@ const styles = StyleSheet.create({
   },
   exploreRecipes: {
     backgroundColor: "#FB6107",
-  },
-  searchRecipe: {
-    backgroundColor: "#598019",
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 16 * 0.75,
-    display: "flex",
-    flexDirection: "row",
-    gap: 16 / 2,
-    alignItems: "center",
-  },
-  searchRecipeInput: {
-    flex: 1,
-    backgroundColor: "#D2D2D2",
-    color: "#000",
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 16 / 2,
-    padding: 16,
-    height: 16 * 3.25 - 1, // account for border width
   },
   featuredRecipes: {
     padding: 16 * 1.5,

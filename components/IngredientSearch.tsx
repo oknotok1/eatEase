@@ -39,7 +39,6 @@ const SearchPage = ({ navigation }: { navigation: any }) => {
           },
         })
         .then((response) => {
-          console.log(response.data);
           setSearchResults(response.data);
         })
         .catch((error) => {

@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RecipeInformation } from "./types"; // Replace with your types
+import { RecipeInformation } from "./types";
 import axios from "axios";
 import recipes from "./data/recipes";
 
@@ -37,8 +37,7 @@ export const AsyncStorageDataProvider: React.FC<
     axios
       .get("https://api.spoonacular.com/recipes/random?number=8", {
         params: {
-          // apiKey: "c2fac6ab9ee34f06a3c19558516ee1f4",
-          // TO UNCOMMENT AFTER TESTING IS COMEPLETE
+          apiKey: "c2fac6ab9ee34f06a3c19558516ee1f4",
         },
       })
       .then((response) => {
