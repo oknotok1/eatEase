@@ -51,28 +51,39 @@ export const AsyncStorageDataProvider: React.FC<
 
   const updateStoredRecipes = async () => {
     try {
+      // Retrieve all keys from AsyncStorage
       const keys = await AsyncStorage.getAllKeys();
+
+      // Retrieve and parse JSON values for each key
       const savedData = await Promise.all(
         keys.map(async (key: string) => {
           const jsonValue = await AsyncStorage.getItem(key);
-          return jsonValue != null ? JSON.parse(jsonValue) : null;
+          try {
+            return jsonValue && JSON.parse(jsonValue);
+          } catch (error) {
+            console.error("Invalid JSON value:", jsonValue);
+            return null;
+          }
         })
       );
 
+      // Filter out null values (invalid data) and set stored recipes state
       const filteredData = savedData.filter((data) => data !== null);
       setStoredRecipes(filteredData);
 
-      // update the featured recipes to show the saved status
+      // Update the featured recipes to show the saved status
       const updatedFeaturedRecipes = featuredRecipes.map((recipe) => {
         const savedRecipe = filteredData.find(
           (savedRecipe: RecipeInformation) => savedRecipe.id === recipe.id
         );
-        recipe.saved = savedRecipe;
+        recipe.saved = savedRecipe; // Assuming a 'saved' property on recipes
         return recipe;
       });
+
+      // Set the updated featured recipes state
       setFeaturedRecipes(updatedFeaturedRecipes);
     } catch (error) {
-      console.error("Error retrieving saved data:", error);
+      console.error("Error retrieving or updating saved data:", error);
     }
   };
 
