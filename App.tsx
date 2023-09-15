@@ -8,13 +8,14 @@ import HomeScreen from "./components/HomeScreen";
 import ExploreRecipes from "./components/ExploreRecipes";
 import Timer from "./components/Timer";
 import { StatusBar } from "react-native";
+import SavedRecipes from "./components/SavedRecipes";
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: "#FB6107",
       }}
@@ -30,12 +31,23 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Recipes"
+        name="Explore Recipes"
         component={ExploreRecipes}
         options={{
-          tabBarLabel: "Recipes",
+          tabBarLabel: "Explore Recipes",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="food" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Saved Recipes"
+        component={SavedRecipes}
+        options={{
+          tabBarLabel: "Saved Recipes",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bookmark" color={color} size={size} />
           ),
           headerShown: false,
         }}

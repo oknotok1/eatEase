@@ -34,6 +34,7 @@ export interface RecipeInformation {
   analyzedInstructions?: AnalyzedInstruction[];
   originalId: null;
   spoonacularSourceUrl: string;
+  saved?: boolean;
 }
 
 export interface AnalyzedInstruction {
