@@ -7,8 +7,11 @@ import React, {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RecipeInformation } from "./types"; // Replace with your types
+import axios from "axios";
+import recipes from "./data/recipes";
 
 interface AsyncStorageDataContextType {
+  featuredRecipes: RecipeInformation[];
   storedRecipes: RecipeInformation[];
   updateStoredRecipes: () => void;
   clearAllStoredData: () => void;
@@ -26,6 +29,25 @@ export const AsyncStorageDataProvider: React.FC<
   AsyncStorageDataProviderProps
 > = ({ children }) => {
   const [storedRecipes, setStoredRecipes] = useState<RecipeInformation[]>([]);
+  const [featuredRecipes, setFeaturedRecipes] = useState<RecipeInformation[]>(
+    []
+  );
+
+  const getRandomRecipe = () => {
+    axios
+      .get("https://api.spoonacular.com/recipes/random?number=8", {
+        params: {
+          // apiKey: "c2fac6ab9ee34f06a3c19558516ee1f4",
+          // TO UNCOMMENT AFTER TESTING IS COMEPLETE
+        },
+      })
+      .then((response) => {
+        setFeaturedRecipes(response.data.recipes);
+      })
+      .catch(() => {
+        setFeaturedRecipes(recipes); // Fallback to local data if API call fails
+      });
+  };
 
   const updateStoredRecipes = async () => {
     try {
@@ -39,6 +61,16 @@ export const AsyncStorageDataProvider: React.FC<
 
       const filteredData = savedData.filter((data) => data !== null);
       setStoredRecipes(filteredData);
+
+      // update the featured recipes to show the saved status
+      const updatedFeaturedRecipes = featuredRecipes.map((recipe) => {
+        const savedRecipe = filteredData.find(
+          (savedRecipe) => savedRecipe.id === recipe.id
+        );
+        recipe.saved = savedRecipe;
+        return recipe;
+      });
+      setFeaturedRecipes(updatedFeaturedRecipes);
     } catch (error) {
       console.error("Error retrieving saved data:", error);
     }
@@ -55,12 +87,18 @@ export const AsyncStorageDataProvider: React.FC<
   };
 
   useEffect(() => {
+    getRandomRecipe();
     updateStoredRecipes();
   }, []);
 
   return (
     <AsyncStorageDataContext.Provider
-      value={{ storedRecipes, updateStoredRecipes, clearAllStoredData }}
+      value={{
+        featuredRecipes,
+        storedRecipes,
+        updateStoredRecipes,
+        clearAllStoredData,
+      }}
     >
       {children}
     </AsyncStorageDataContext.Provider>

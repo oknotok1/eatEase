@@ -8,30 +8,13 @@ import Button from "./Button";
 import recipes from "../data/recipes";
 import { RecipeInformation } from "../types";
 import RecipeCard from "./RecipeCard";
+import { useAsyncStorageData } from "../AsyncStorageDataContext";
 
 const Stack = createStackNavigator();
 
 const ExploreRecipes = ({ navigation }: { navigation: any }) => {
+  const { featuredRecipes } = useAsyncStorageData();
   const [searchQuery, setSearchQuery] = useState("");
-  const [featuredRecipes, setFeaturedRecipes] = useState<RecipeInformation[]>(
-    []
-  );
-
-  const getRandomRecipe = () => {
-    axios
-      .get("https://api.spoonacular.com/recipes/random?number=8", {
-        params: {
-          // apiKey: "c2fac6ab9ee34f06a3c19558516ee1f4",
-          // TO UNCOMMENT AFTER TESTING IS COMEPLETE
-        },
-      })
-      .then((response) => {
-        setFeaturedRecipes(response.data.recipes);
-      })
-      .catch(() => {
-        setFeaturedRecipes(recipes); // Fallback to local data if API call fails
-      });
-  };
 
   const handleSearch = () => {
     if (searchQuery.trim() === "") {
@@ -41,10 +24,6 @@ const ExploreRecipes = ({ navigation }: { navigation: any }) => {
       console.log("API call with search query:", searchQuery);
     }
   };
-
-  useEffect(() => {
-    getRandomRecipe();
-  }, []);
 
   // Loading Screen
   if (featuredRecipes.length === 0) {
