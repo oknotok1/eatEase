@@ -85,6 +85,7 @@ const RecipeCard = ({
           bottom: 16,
           right: 16,
           borderRadius: 16 / 2,
+          padding: 16 / 2,
         }}
       >
         <MaterialCommunityIcons
@@ -99,46 +100,9 @@ const RecipeCard = ({
 export default RecipeCard;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-  },
   text: {
     fontSize: 16,
     fontFamily: "figtree-regular",
-  },
-  titleText: {
-    fontSize: 16 * 2.75,
-    fontFamily: "limelight-regular",
-    fontWeight: "bold",
-    textTransform: "capitalize",
-  },
-  exploreRecipes: {
-    backgroundColor: "#FB6107",
-  },
-  searchRecipe: {
-    backgroundColor: "#598019",
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 16 * 0.75,
-    display: "flex",
-    flexDirection: "row",
-    gap: 16 / 2,
-    alignItems: "center",
-  },
-  searchRecipeInput: {
-    flex: 1,
-    backgroundColor: "#D2D2D2",
-    color: "#000",
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 16 / 2,
-    padding: 16,
-    height: 16 * 3.25 - 1, // account for border width
-  },
-  featuredRecipes: {
-    padding: 16 * 1.5,
   },
   featuredRecipeItem: {
     backgroundColor: "#F4DF46",

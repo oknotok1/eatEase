@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
-import axios from "axios";
 import Recipe from "./Recipe";
 import Button from "./Button";
 import recipes from "../data/recipes";
@@ -142,10 +141,5 @@ const styles = StyleSheet.create({
   },
   featuredRecipes: {
     padding: 16 * 1.5,
-  },
-  featuredRecipeItem: {
-    backgroundColor: "#F4DF46",
-    padding: 16,
-    borderRadius: 16,
   },
 });

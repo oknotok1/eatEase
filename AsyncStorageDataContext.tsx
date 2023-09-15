@@ -53,7 +53,7 @@ export const AsyncStorageDataProvider: React.FC<
     try {
       const keys = await AsyncStorage.getAllKeys();
       const savedData = await Promise.all(
-        keys.map(async (key) => {
+        keys.map(async (key: string) => {
           const jsonValue = await AsyncStorage.getItem(key);
           return jsonValue != null ? JSON.parse(jsonValue) : null;
         })
@@ -65,7 +65,7 @@ export const AsyncStorageDataProvider: React.FC<
       // update the featured recipes to show the saved status
       const updatedFeaturedRecipes = featuredRecipes.map((recipe) => {
         const savedRecipe = filteredData.find(
-          (savedRecipe) => savedRecipe.id === recipe.id
+          (savedRecipe: RecipeInformation) => savedRecipe.id === recipe.id
         );
         recipe.saved = savedRecipe;
         return recipe;
