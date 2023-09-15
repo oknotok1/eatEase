@@ -59,7 +59,7 @@ const RecipeCard = ({
           {
             fontSize: 16 * 1.5,
             fontFamily: "figtree-medium",
-            marginTop: 16 / 2,
+            marginTop: 16,
           },
         ]}
       >
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   featuredRecipeItem: {
     backgroundColor: "#F4DF46",
-    padding: 16,
+    padding: 16 * 1.5,
     borderRadius: 16,
   },
 });

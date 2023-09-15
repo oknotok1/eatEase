@@ -20,7 +20,12 @@ const SavedRecipes = ({ navigation }: { navigation: any }) => {
         style={[
           styles.exploreRecipes,
           styles.container,
-          { display: "flex", justifyContent: "center", alignItems: "center" },
+          {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 16,
+          },
         ]}
       >
         <Text
@@ -35,6 +40,13 @@ const SavedRecipes = ({ navigation }: { navigation: any }) => {
         >
           No Saved Recipes
         </Text>
+        <Button
+          onPress={() => {
+            navigation.navigate("Explore Recipes");
+          }}
+          text="Explore Recipes"
+          color="secondary"
+        />
       </View>
     );
   }
@@ -53,7 +65,7 @@ const SavedRecipes = ({ navigation }: { navigation: any }) => {
             onPress={() => {
               clearAllStoredData();
             }}
-            text="Clear All Data"
+            text="Delete All Saved Recipes"
             color="secondary"
           />
         </View>

@@ -2,27 +2,18 @@ import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
+import { useAsyncStorageData } from "../AsyncStorageDataContext";
+import axios from "axios";
 import Recipe from "./Recipe";
 import Button from "./Button";
 import recipes from "../data/recipes";
-import { RecipeInformation } from "../types";
 import RecipeCard from "./RecipeCard";
-import { useAsyncStorageData } from "../AsyncStorageDataContext";
+import { RecipeInformation } from "../types";
 
 const Stack = createStackNavigator();
 
 const ExploreRecipes = ({ navigation }: { navigation: any }) => {
   const { featuredRecipes } = useAsyncStorageData();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearch = () => {
-    if (searchQuery.trim() === "") {
-      // Show an alert or error message if the search query is empty
-      Alert.alert("Empty Search", "Please enter a search query.");
-    } else {
-      console.log("API call with search query:", searchQuery);
-    }
-  };
 
   // Loading Screen
   if (featuredRecipes.length === 0) {
@@ -52,19 +43,6 @@ const ExploreRecipes = ({ navigation }: { navigation: any }) => {
 
   return (
     <View style={[styles.exploreRecipes, styles.container]}>
-      <View style={styles.searchRecipe}>
-        <TextInput
-          placeholder="Search by Ingredients"
-          style={[styles.searchRecipeInput, styles.text]}
-          onChangeText={(text) => setSearchQuery(text)}
-          value={searchQuery}
-        />
-        <Button
-          onPress={handleSearch}
-          text="Search"
-          disabled={searchQuery.trim() === ""}
-        />
-      </View>
       <ScrollView>
         <View style={styles.featuredRecipes}>
           <Text style={styles.titleText}>Featured Recipes</Text>
@@ -80,18 +58,8 @@ const ExploreRecipes = ({ navigation }: { navigation: any }) => {
 function MyStack() {
   return (
     <Stack.Navigator initialRouteName="Explore">
-      <Stack.Screen
-        name="Explore"
-        component={ExploreRecipes}
-        initialParams={{
-          recipes: recipes,
-        }}
-      />
-      <Stack.Screen
-        name="Recipe"
-        component={Recipe}
-        initialParams={{ recipeInformation: recipes[0] }}
-      />
+      <Stack.Screen name="Explore" component={ExploreRecipes} />
+      <Stack.Screen name="Recipe" component={Recipe} />
     </Stack.Navigator>
   );
 }

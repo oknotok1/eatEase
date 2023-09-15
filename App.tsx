@@ -6,10 +6,10 @@ import * as Font from "expo-font";
 
 import HomeScreen from "./components/HomeScreen";
 import ExploreRecipes from "./components/ExploreRecipes";
-import Timer from "./components/Timer";
 import { StatusBar } from "react-native";
 import SavedRecipes from "./components/SavedRecipes";
 import { AsyncStorageDataProvider } from "./AsyncStorageDataContext";
+import IngredientSearch from "./components/IngredientSearch";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,6 +43,21 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
+        name="Search By Ingredients"
+        component={IngredientSearch}
+        options={{
+          tabBarLabel: "Ingredient Search",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="search-web"
+              color={color}
+              size={size}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
         name="Saved Recipes"
         component={SavedRecipes}
         options={{
@@ -53,16 +68,6 @@ function MyTabs() {
           headerShown: false,
         }}
       />
-      {/* <Tab.Screen
-        name="Timer"
-        component={Timer}
-        options={{
-          tabBarLabel: "Timer",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="timer" color={color} size={size} />
-          ),
-        }}
-      /> */}
     </Tab.Navigator>
   );
 }

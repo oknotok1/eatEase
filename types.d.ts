@@ -87,3 +87,30 @@ export interface Metric {
   unitShort: string;
   unitLong: string;
 }
+
+export interface RecipeByIngredients {
+  id: number;
+  title: string;
+  image: string;
+  imageType: string;
+  usedIngredientCount: number;
+  missedIngredientCount: number;
+  missedIngredients: Ingredient2[];
+  usedIngredients: Ingredient2[];
+  unusedIngredients: any[];
+  likes: number;
+}
+export interface Ingredient2 {
+  id: number;
+  amount: number;
+  unit: string;
+  unitLong: string;
+  unitShort: string;
+  aisle: null | string;
+  name: string;
+  original: string;
+  originalName: string;
+  meta: string[];
+  image: string;
+  extendedName?: string;
+}
