@@ -8,44 +8,12 @@ import recipes from "../data/recipes";
 import { RecipeInformation } from "../types";
 import RecipeCard from "./RecipeCard";
 import Button from "./Button";
+import { useAsyncStorageData } from "../AsyncStorageDataContext";
 
 const Stack = createStackNavigator();
 
 const SavedRecipes = ({ navigation }: { navigation: any }) => {
-  const [storedRecipes, setStoredRecipes] = useState<RecipeInformation[]>([]);
-
-  const getAllSavedData = async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-
-      const savedData = await Promise.all(
-        keys.map(async (key) => {
-          const jsonValue = await AsyncStorage.getItem(key);
-          return jsonValue != null ? JSON.parse(jsonValue) : null;
-        })
-      );
-
-      // Filter out any null values
-      const filteredData = savedData.filter((data) => data !== null);
-
-      setStoredRecipes(filteredData);
-    } catch (error) {
-      console.error("Error retrieving saved data:", error);
-    }
-  };
-
-  const clearAllData = async () => {
-    try {
-      await AsyncStorage.clear();
-      console.log("All data cleared from AsyncStorage.");
-    } catch (error) {
-      console.error("Error clearing data from AsyncStorage:", error);
-    }
-  };
-
-  useEffect(() => {
-    getAllSavedData();
-  }, []);
+  const { storedRecipes, clearAllStoredData } = useAsyncStorageData();
 
   if (storedRecipes.length === 0) {
     return (
@@ -84,8 +52,7 @@ const SavedRecipes = ({ navigation }: { navigation: any }) => {
         <View style={{ marginBottom: 16 * 2, marginHorizontal: 16 * 1.5 }}>
           <Button
             onPress={() => {
-              clearAllData();
-              getAllSavedData();
+              clearAllStoredData();
             }}
             text="Clear All Data"
             color="secondary"

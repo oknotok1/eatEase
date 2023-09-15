@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Picture from "./Picture";
 import { RecipeInformation } from "../types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useAsyncStorageData } from "../AsyncStorageDataContext";
 
 const RecipeCard = ({
   recipe,
@@ -13,11 +14,14 @@ const RecipeCard = ({
   index: number;
   navigation: any;
 }) => {
+  const { updateStoredRecipes } = useAsyncStorageData();
+
   const storeData = async () => {
     try {
       recipe.saved = true;
       const jsonValue = JSON.stringify(recipe);
       await AsyncStorage.setItem(recipe.id.toString(), jsonValue);
+      updateStoredRecipes();
     } catch (e) {
       console.error(e);
     }
@@ -25,7 +29,9 @@ const RecipeCard = ({
 
   const removeFromStoredData = async () => {
     try {
+      recipe.saved = false;
       await AsyncStorage.removeItem(recipe.id.toString());
+      updateStoredRecipes();
     } catch (e) {
       console.error(e);
     }

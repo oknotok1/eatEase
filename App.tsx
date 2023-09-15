@@ -9,6 +9,7 @@ import ExploreRecipes from "./components/ExploreRecipes";
 import Timer from "./components/Timer";
 import { StatusBar } from "react-native";
 import SavedRecipes from "./components/SavedRecipes";
+import { AsyncStorageDataProvider } from "./AsyncStorageDataContext";
 
 const Tab = createBottomTabNavigator();
 
@@ -88,9 +89,11 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
-      <MyTabs />
-    </NavigationContainer>
+    <AsyncStorageDataProvider>
+      <NavigationContainer>
+        <StatusBar barStyle="dark-content" />
+        <MyTabs />
+      </NavigationContainer>
+    </AsyncStorageDataProvider>
   );
 }
