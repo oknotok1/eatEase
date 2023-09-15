@@ -33,6 +33,13 @@
         "projectId": "fa411e35-b1ce-4b06-b78b-52547a3bf779"
       }
     },
-    "owner": "oknotok1"
+    "owner": "oknotok1",
+    "privacy": "public",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/fa411e35-b1ce-4b06-b78b-52547a3bf779"
+    }
   }
 }
